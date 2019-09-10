@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Officetype:</strong>
+  <%= @office_type.officeType_id %>
+</p>
+
+<p>
+  <strong>Officetype name:</strong>
+  <%= @office_type.officeType_name %>
+</p>
+
+<%= link_to 'Edit', edit_office_type_path(@office_type) %> |
+<%= link_to 'Back', office_types_path %>

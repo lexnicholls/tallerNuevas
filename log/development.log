@@ -1,0 +1,899 @@
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (185.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (156.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateSpecialties (20190910181501)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "specialties" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "specialty_id" integer, "profession" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181501"]]
+  [1m[35m (185.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateDoctors (20190910181510)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "doctors" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "surname" varchar, "id_number" integer, "cellphone_number" integer, "specialty_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_ef7f4d48f9"
+FOREIGN KEY ("specialty_id")
+  REFERENCES "specialties" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_doctors_on_specialty_id" ON "doctors" ("specialty_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181510"]]
+  [1m[35m (183.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePatients (20190910181517)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "patients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "surname" varchar, "birth_date" date, "id_number" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181517"]]
+  [1m[35m (130.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOfficeTypes (20190910181523)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "office_types" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "officeType_id" integer, "officeType_name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181523"]]
+  [1m[35m (152.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateOffices (20190910181532)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "offices" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "code" varchar, "name" varchar, "location" varchar, "office_type_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_b54ce09c8d"
+FOREIGN KEY ("office_type_id")
+  REFERENCES "office_types" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_offices_on_office_type_id" ON "offices" ("office_type_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181532"]]
+  [1m[35m (106.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAppointments (20190910181551)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "appointments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "office_id" integer NOT NULL, "doctor_id" integer NOT NULL, "doctor_name" varchar, "doctor_surname" varchar, "patient_id" integer NOT NULL, "patient_name" varchar, "patient_surname" varchar, "appointment_date" date, "start_Time" datetime, "end_Time" datetime, "appointment_Purpose" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c1f7b5cbe8"
+FOREIGN KEY ("office_id")
+  REFERENCES "offices" ("id")
+, CONSTRAINT "fk_rails_8db8e1e8a5"
+FOREIGN KEY ("doctor_id")
+  REFERENCES "doctors" ("id")
+, CONSTRAINT "fk_rails_c63da04ab4"
+FOREIGN KEY ("patient_id")
+  REFERENCES "patients" ("id")
+)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_office_id" ON "appointments" ("office_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_doctor_id" ON "appointments" ("doctor_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_appointments_on_patient_id" ON "appointments" ("patient_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181551"]]
+  [1m[35m (178.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to FirstMigration (20190910181559)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mprimary::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190910181559"]]
+  [1m[35m (213.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-09-10 18:16:09.707278"], ["updated_at", "2019-09-10 18:16:09.707278"]]
+  [1m[35m (263.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/specialties/new" for 127.0.0.1 at 2019-09-10 13:17:19 -0500
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SpecialtiesController#new as HTML
+  Rendering specialties/new.html.erb within layouts/application
+  Rendered specialties/_form.html.erb (Duration: 8.8ms | Allocations: 5299)
+  Rendered specialties/new.html.erb within layouts/application (Duration: 10.4ms | Allocations: 5939)
+[Webpacker] Compiling…
+[Webpacker] Compiled all packs in /home/lexnicholls/tallerNuevas/public/packs
+Completed 200 OK in 4572ms (Views: 4547.3ms | ActiveRecord: 0.7ms | Allocations: 1296940)
+
+
+Started POST "/specialties" for 127.0.0.1 at 2019-09-10 13:17:28 -0500
+Processing by SpecialtiesController#create as HTML
+  Parameters: {"authenticity_token"=>"vjNYwEvjyywlm8BaIr24yAhwdW+tk5d3wKzYacnJJwOzoU3Up7CQM+VrUbp34ie/pKQawBvvPUD9dkgpei7zQA==", "specialty"=>{"specialty_id"=>"1", "profession"=>"Optometrist"}, "commit"=>"Create Specialty"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Create (0.3ms)[0m  [1m[32mINSERT INTO "specialties" ("specialty_id", "profession", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["specialty_id", 1], ["profession", "Optometrist"], ["created_at", "2019-09-10 18:17:29.001862"], ["updated_at", "2019-09-10 18:17:29.001862"]]
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[35m (119.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/specialties/1
+Completed 302 Found in 129ms (ActiveRecord: 119.4ms | Allocations: 3774)
+
+
+Started GET "/specialties/1" for 127.0.0.1 at 2019-09-10 13:17:29 -0500
+Processing by SpecialtiesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSpecialty Load (0.3ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/specialties_controller.rb:67:in `set_specialty'
+  Rendering specialties/show.html.erb within layouts/application
+  Rendered specialties/show.html.erb within layouts/application (Duration: 0.7ms | Allocations: 285)
+Completed 200 OK in 13ms (Views: 8.4ms | ActiveRecord: 0.3ms | Allocations: 10769)
+
+
+Started GET "/specialties" for 127.0.0.1 at 2019-09-10 13:17:30 -0500
+Processing by SpecialtiesController#index as HTML
+  Rendering specialties/index.html.erb within layouts/application
+  [1m[36mSpecialty Load (0.3ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties"[0m
+  ↳ app/views/specialties/index.html.erb:15
+  Rendered specialties/index.html.erb within layouts/application (Duration: 3.0ms | Allocations: 1039)
+Completed 200 OK in 13ms (Views: 11.9ms | ActiveRecord: 0.3ms | Allocations: 10532)
+
+
+Started GET "/specialties/new" for 127.0.0.1 at 2019-09-10 13:17:30 -0500
+Processing by SpecialtiesController#new as HTML
+  Rendering specialties/new.html.erb within layouts/application
+  Rendered specialties/_form.html.erb (Duration: 1.1ms | Allocations: 716)
+  Rendered specialties/new.html.erb within layouts/application (Duration: 1.4ms | Allocations: 802)
+Completed 200 OK in 11ms (Views: 10.2ms | ActiveRecord: 0.0ms | Allocations: 10158)
+
+
+Started POST "/specialties" for 127.0.0.1 at 2019-09-10 13:17:33 -0500
+Processing by SpecialtiesController#create as HTML
+  Parameters: {"authenticity_token"=>"A5uJ6BBK+NFxQcOSCXTv8E+CVJPiHRag22sV+FsPSyYOCZz8/BmjzrGxUnJcK3CH41Y7PFRhvJfmsYW46OifZQ==", "specialty"=>{"specialty_id"=>"2", "profession"=>"Surgeon"}, "commit"=>"Create Specialty"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Create (0.3ms)[0m  [1m[32mINSERT INTO "specialties" ("specialty_id", "profession", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["specialty_id", 2], ["profession", "Surgeon"], ["created_at", "2019-09-10 18:17:33.884002"], ["updated_at", "2019-09-10 18:17:33.884002"]]
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[35m (322.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/specialties/2
+Completed 302 Found in 330ms (ActiveRecord: 322.9ms | Allocations: 3493)
+
+
+Started GET "/specialties/2" for 127.0.0.1 at 2019-09-10 13:17:34 -0500
+Processing by SpecialtiesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSpecialty Load (0.2ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/specialties_controller.rb:67:in `set_specialty'
+  Rendering specialties/show.html.erb within layouts/application
+  Rendered specialties/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 95)
+Completed 200 OK in 11ms (Views: 8.9ms | ActiveRecord: 0.2ms | Allocations: 9957)
+
+
+Started GET "/specialties" for 127.0.0.1 at 2019-09-10 13:17:35 -0500
+Processing by SpecialtiesController#index as HTML
+  Rendering specialties/index.html.erb within layouts/application
+  [1m[36mSpecialty Load (0.1ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties"[0m
+  ↳ app/views/specialties/index.html.erb:15
+  Rendered specialties/index.html.erb within layouts/application (Duration: 1.3ms | Allocations: 853)
+Completed 200 OK in 11ms (Views: 10.0ms | ActiveRecord: 0.1ms | Allocations: 10188)
+
+
+Started GET "/specialties/new" for 127.0.0.1 at 2019-09-10 13:17:36 -0500
+Processing by SpecialtiesController#new as HTML
+  Rendering specialties/new.html.erb within layouts/application
+  Rendered specialties/_form.html.erb (Duration: 17.1ms | Allocations: 713)
+  Rendered specialties/new.html.erb within layouts/application (Duration: 17.4ms | Allocations: 798)
+Completed 200 OK in 27ms (Views: 26.3ms | ActiveRecord: 0.0ms | Allocations: 10143)
+
+
+Started POST "/specialties" for 127.0.0.1 at 2019-09-10 13:17:39 -0500
+Processing by SpecialtiesController#create as HTML
+  Parameters: {"authenticity_token"=>"KAVM3MF6sOshJWPANocwEug5gUppwaNvKtqgOrhJk/Mll1nILSnr9OHV8iBj2K9lRO3u5d+9CVgXADB6C65HsA==", "specialty"=>{"specialty_id"=>"3", "profession"=>"Chiropractic"}, "commit"=>"Create Specialty"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Create (0.4ms)[0m  [1m[32mINSERT INTO "specialties" ("specialty_id", "profession", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["specialty_id", 3], ["profession", "Chiropractic"], ["created_at", "2019-09-10 18:17:39.478286"], ["updated_at", "2019-09-10 18:17:39.478286"]]
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[35m (151.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/specialties/3
+Completed 302 Found in 161ms (ActiveRecord: 152.3ms | Allocations: 3486)
+
+
+Started GET "/specialties/3" for 127.0.0.1 at 2019-09-10 13:17:39 -0500
+Processing by SpecialtiesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mSpecialty Load (0.1ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/specialties_controller.rb:67:in `set_specialty'
+  Rendering specialties/show.html.erb within layouts/application
+  Rendered specialties/show.html.erb within layouts/application (Duration: 0.2ms | Allocations: 94)
+Completed 200 OK in 13ms (Views: 11.7ms | ActiveRecord: 0.1ms | Allocations: 9942)
+
+
+Started GET "/specialties" for 127.0.0.1 at 2019-09-10 13:17:40 -0500
+Processing by SpecialtiesController#index as HTML
+  Rendering specialties/index.html.erb within layouts/application
+  [1m[36mSpecialty Load (0.1ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties"[0m
+  ↳ app/views/specialties/index.html.erb:15
+  Rendered specialties/index.html.erb within layouts/application (Duration: 1.4ms | Allocations: 979)
+Completed 200 OK in 11ms (Views: 9.0ms | ActiveRecord: 0.1ms | Allocations: 10316)
+
+
+Started GET "/specialties/new" for 127.0.0.1 at 2019-09-10 13:17:41 -0500
+Processing by SpecialtiesController#new as HTML
+  Rendering specialties/new.html.erb within layouts/application
+  Rendered specialties/_form.html.erb (Duration: 1.0ms | Allocations: 713)
+  Rendered specialties/new.html.erb within layouts/application (Duration: 1.3ms | Allocations: 798)
+Completed 200 OK in 15ms (Views: 14.3ms | ActiveRecord: 0.0ms | Allocations: 10144)
+
+
+Started POST "/specialties" for 127.0.0.1 at 2019-09-10 13:17:44 -0500
+Processing by SpecialtiesController#create as HTML
+  Parameters: {"authenticity_token"=>"YRWTIiqxpy73ElVg3cRLMKsCVhDiqh0QGjtm9WL4BI9sh4Y2xuL8MTfixICIm9RHB9Y5v1TWtycn4fa10R/QzA==", "specialty"=>{"specialty_id"=>"4", "profession"=>"Otolaryngologist"}, "commit"=>"Create Specialty"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Create (0.3ms)[0m  [1m[32mINSERT INTO "specialties" ("specialty_id", "profession", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["specialty_id", 4], ["profession", "Otolaryngologist"], ["created_at", "2019-09-10 18:17:44.521174"], ["updated_at", "2019-09-10 18:17:44.521174"]]
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+  [1m[35m (139.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/specialties_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/specialties/4
+Completed 302 Found in 145ms (ActiveRecord: 140.2ms | Allocations: 3397)
+
+
+Started GET "/specialties/4" for 127.0.0.1 at 2019-09-10 13:17:44 -0500
+Processing by SpecialtiesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mSpecialty Load (0.2ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/specialties_controller.rb:67:in `set_specialty'
+  Rendering specialties/show.html.erb within layouts/application
+  Rendered specialties/show.html.erb within layouts/application (Duration: 0.4ms | Allocations: 94)
+Completed 200 OK in 21ms (Views: 18.9ms | ActiveRecord: 0.2ms | Allocations: 9941)
+
+
+Started GET "/specialties" for 127.0.0.1 at 2019-09-10 13:17:45 -0500
+Processing by SpecialtiesController#index as HTML
+  Rendering specialties/index.html.erb within layouts/application
+  [1m[36mSpecialty Load (0.1ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties"[0m
+  ↳ app/views/specialties/index.html.erb:15
+  Rendered specialties/index.html.erb within layouts/application (Duration: 1.7ms | Allocations: 1094)
+Completed 200 OK in 11ms (Views: 10.0ms | ActiveRecord: 0.1ms | Allocations: 10428)
+
+
+Started GET "/doctors/new" for 127.0.0.1 at 2019-09-10 13:17:47 -0500
+Processing by DoctorsController#new as HTML
+  Rendering doctors/new.html.erb within layouts/application
+  Rendered doctors/_form.html.erb (Duration: 2.8ms | Allocations: 1966)
+  Rendered doctors/new.html.erb within layouts/application (Duration: 3.5ms | Allocations: 2309)
+Completed 200 OK in 23ms (Views: 12.0ms | ActiveRecord: 0.5ms | Allocations: 18408)
+
+
+Started POST "/doctors" for 127.0.0.1 at 2019-09-10 13:17:55 -0500
+Processing by DoctorsController#create as HTML
+  Parameters: {"authenticity_token"=>"NNqDGJLL5jXnvkBXRiBvoPKV4tNhDp4PeooopdmEaazH94iT6Pk4RaRVGsfsQIeb/6+Ee0YqF/b+EfcACYRXvg==", "doctor"=>{"name"=>"Alexander", "surname"=>"Nicholls", "id_number"=>"1", "cellphone_number"=>"1234", "specialty_id"=>"2"}, "commit"=>"Create Doctor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Load (0.1ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[36mDoctor Create (0.3ms)[0m  [1m[32mINSERT INTO "doctors" ("name", "surname", "id_number", "cellphone_number", "specialty_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Alexander"], ["surname", "Nicholls"], ["id_number", 1], ["cellphone_number", 1234], ["specialty_id", 2], ["created_at", "2019-09-10 18:17:55.034875"], ["updated_at", "2019-09-10 18:17:55.034875"]]
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[35m (157.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/doctors/1
+Completed 302 Found in 180ms (ActiveRecord: 158.0ms | Allocations: 10723)
+
+
+Started GET "/doctors/1" for 127.0.0.1 at 2019-09-10 13:17:55 -0500
+Processing by DoctorsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:67:in `set_doctor'
+  Rendering doctors/show.html.erb within layouts/application
+  Rendered doctors/show.html.erb within layouts/application (Duration: 0.8ms | Allocations: 351)
+Completed 200 OK in 13ms (Views: 10.2ms | ActiveRecord: 0.3ms | Allocations: 10479)
+
+
+Started GET "/doctors" for 127.0.0.1 at 2019-09-10 13:17:56 -0500
+Processing by DoctorsController#index as HTML
+  Rendering doctors/index.html.erb within layouts/application
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors"[0m
+  ↳ app/views/doctors/index.html.erb:18
+  Rendered doctors/index.html.erb within layouts/application (Duration: 2.5ms | Allocations: 1080)
+Completed 200 OK in 14ms (Views: 13.0ms | ActiveRecord: 0.2ms | Allocations: 10558)
+
+
+Started GET "/doctors/new" for 127.0.0.1 at 2019-09-10 13:17:57 -0500
+Processing by DoctorsController#new as HTML
+  Rendering doctors/new.html.erb within layouts/application
+  Rendered doctors/_form.html.erb (Duration: 3.9ms | Allocations: 1301)
+  Rendered doctors/new.html.erb within layouts/application (Duration: 4.5ms | Allocations: 1386)
+Completed 200 OK in 17ms (Views: 15.8ms | ActiveRecord: 0.0ms | Allocations: 10734)
+
+
+Started POST "/doctors" for 127.0.0.1 at 2019-09-10 13:18:05 -0500
+Processing by DoctorsController#create as HTML
+  Parameters: {"authenticity_token"=>"3JIYxugvkAzBaWsAdBfv7HC7J51Hh+qd5bzQMR9yO/8vvxNNkh1OfIKCMZDedwfXfYFBNWCjY2RhJw+Uz3IF7Q==", "doctor"=>{"name"=>"Andres", "surname"=>"Barbosa", "id_number"=>"2", "cellphone_number"=>"5678", "specialty_id"=>"3"}, "commit"=>"Create Doctor"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[36mSpecialty Load (0.2ms)[0m  [1m[34mSELECT "specialties".* FROM "specialties" WHERE "specialties"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[36mDoctor Create (0.4ms)[0m  [1m[32mINSERT INTO "doctors" ("name", "surname", "id_number", "cellphone_number", "specialty_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["name", "Andres"], ["surname", "Barbosa"], ["id_number", 2], ["cellphone_number", 5678], ["specialty_id", 3], ["created_at", "2019-09-10 18:18:05.416369"], ["updated_at", "2019-09-10 18:18:05.416369"]]
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+  [1m[35m (143.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/doctors_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/doctors/2
+Completed 302 Found in 154ms (ActiveRecord: 143.9ms | Allocations: 4676)
+
+
+Started GET "/doctors/2" for 127.0.0.1 at 2019-09-10 13:18:05 -0500
+Processing by DoctorsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/doctors_controller.rb:67:in `set_doctor'
+  Rendering doctors/show.html.erb within layouts/application
+  Rendered doctors/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 103)
+Completed 200 OK in 16ms (Views: 14.1ms | ActiveRecord: 0.1ms | Allocations: 9955)
+
+
+Started GET "/doctors" for 127.0.0.1 at 2019-09-10 13:18:07 -0500
+Processing by DoctorsController#index as HTML
+  Rendering doctors/index.html.erb within layouts/application
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors"[0m
+  ↳ app/views/doctors/index.html.erb:18
+  Rendered doctors/index.html.erb within layouts/application (Duration: 1.6ms | Allocations: 873)
+Completed 200 OK in 11ms (Views: 10.8ms | ActiveRecord: 0.1ms | Allocations: 10215)
+
+
+Started GET "/patients/new" for 127.0.0.1 at 2019-09-10 13:18:09 -0500
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (Duration: 6.7ms | Allocations: 2975)
+  Rendered patients/new.html.erb within layouts/application (Duration: 7.8ms | Allocations: 3320)
+Completed 200 OK in 33ms (Views: 23.0ms | ActiveRecord: 0.7ms | Allocations: 17759)
+
+
+Started POST "/patients" for 127.0.0.1 at 2019-09-10 13:18:17 -0500
+Processing by PatientsController#create as HTML
+  Parameters: {"authenticity_token"=>"ZtlPWN9EvSQoDZQXJj7kS7+0N3T1leDoYMxsk5Cb7+vdiKrN++Ugk6hh5qJFt8XboJ8dG4NQ8ME63okH+YRK3w==", "patient"=>{"name"=>"Pepito", "surname"=>"Perez", "birth_date(1i)"=>"2014", "birth_date(2i)"=>"1", "birth_date(3i)"=>"1", "id_number"=>"1"}, "commit"=>"Create Patient"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[36mPatient Create (0.3ms)[0m  [1m[32mINSERT INTO "patients" ("name", "surname", "birth_date", "id_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Pepito"], ["surname", "Perez"], ["birth_date", "2014-01-01"], ["id_number", 1], ["created_at", "2019-09-10 18:18:17.950010"], ["updated_at", "2019-09-10 18:18:17.950010"]]
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[35m (197.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/patients/1
+Completed 302 Found in 205ms (ActiveRecord: 197.8ms | Allocations: 3727)
+
+
+Started GET "/patients/1" for 127.0.0.1 at 2019-09-10 13:18:18 -0500
+Processing by PatientsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/patients_controller.rb:67:in `set_patient'
+  Rendering patients/show.html.erb within layouts/application
+  Rendered patients/show.html.erb within layouts/application (Duration: 0.6ms | Allocations: 330)
+Completed 200 OK in 13ms (Views: 10.4ms | ActiveRecord: 0.2ms | Allocations: 10449)
+
+
+Started GET "/patients" for 127.0.0.1 at 2019-09-10 13:18:19 -0500
+Processing by PatientsController#index as HTML
+  Rendering patients/index.html.erb within layouts/application
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients"[0m
+  ↳ app/views/patients/index.html.erb:17
+  Rendered patients/index.html.erb within layouts/application (Duration: 2.6ms | Allocations: 1068)
+Completed 200 OK in 15ms (Views: 13.0ms | ActiveRecord: 0.2ms | Allocations: 10544)
+
+
+Started GET "/patients/new" for 127.0.0.1 at 2019-09-10 13:18:20 -0500
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (Duration: 2.4ms | Allocations: 2019)
+  Rendered patients/new.html.erb within layouts/application (Duration: 2.6ms | Allocations: 2104)
+Completed 200 OK in 12ms (Views: 11.7ms | ActiveRecord: 0.0ms | Allocations: 11452)
+
+
+Started POST "/patients" for 127.0.0.1 at 2019-09-10 13:18:31 -0500
+Processing by PatientsController#create as HTML
+  Parameters: {"authenticity_token"=>"MeMdgsC/A3/9Izjjqtjz34Njg6HuTnxaW7Lui50W3UmKsvgX5B6eyH1PSlbJUdJPnEipzpiLbHMBoAsf9Al4fQ==", "patient"=>{"name"=>"Sutanito", "surname"=>"Cardenas", "birth_date(1i)"=>"2014", "birth_date(2i)"=>"2", "birth_date(3i)"=>"2", "id_number"=>"2"}, "commit"=>"Create Patient"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[36mPatient Create (0.2ms)[0m  [1m[32mINSERT INTO "patients" ("name", "surname", "birth_date", "id_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Sutanito"], ["surname", "Cardenas"], ["birth_date", "2014-02-02"], ["id_number", 2], ["created_at", "2019-09-10 18:18:31.640142"], ["updated_at", "2019-09-10 18:18:31.640142"]]
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[35m (207.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/patients/2
+Completed 302 Found in 215ms (ActiveRecord: 208.0ms | Allocations: 3650)
+
+
+Started GET "/patients/2" for 127.0.0.1 at 2019-09-10 13:18:31 -0500
+Processing by PatientsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/patients_controller.rb:67:in `set_patient'
+  Rendering patients/show.html.erb within layouts/application
+  Rendered patients/show.html.erb within layouts/application (Duration: 0.4ms | Allocations: 107)
+Completed 200 OK in 11ms (Views: 8.9ms | ActiveRecord: 0.2ms | Allocations: 9960)
+
+
+Started GET "/patients" for 127.0.0.1 at 2019-09-10 13:18:33 -0500
+Processing by PatientsController#index as HTML
+  Rendering patients/index.html.erb within layouts/application
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients"[0m
+  ↳ app/views/patients/index.html.erb:17
+  Rendered patients/index.html.erb within layouts/application (Duration: 1.3ms | Allocations: 883)
+Completed 200 OK in 13ms (Views: 12.3ms | ActiveRecord: 0.1ms | Allocations: 10215)
+
+
+Started GET "/patients/new" for 127.0.0.1 at 2019-09-10 13:18:33 -0500
+Processing by PatientsController#new as HTML
+  Rendering patients/new.html.erb within layouts/application
+  Rendered patients/_form.html.erb (Duration: 2.5ms | Allocations: 2016)
+  Rendered patients/new.html.erb within layouts/application (Duration: 2.8ms | Allocations: 2101)
+Completed 200 OK in 13ms (Views: 12.8ms | ActiveRecord: 0.0ms | Allocations: 11444)
+
+
+Started POST "/patients" for 127.0.0.1 at 2019-09-10 13:18:42 -0500
+Processing by PatientsController#create as HTML
+  Parameters: {"authenticity_token"=>"4V3M3D+Lk5+byjqsq897FcCi7bGfbgwEQ7455aHVep1aDClJGyoOKBumSBnIRlqF34nH3umrHC0ZrNxxyMrfqQ==", "patient"=>{"name"=>"Pancracio", "surname"=>"Pancreas", "birth_date(1i)"=>"2014", "birth_date(2i)"=>"3", "birth_date(3i)"=>"3", "id_number"=>"3"}, "commit"=>"Create Patient"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[36mPatient Create (0.3ms)[0m  [1m[32mINSERT INTO "patients" ("name", "surname", "birth_date", "id_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Pancracio"], ["surname", "Pancreas"], ["birth_date", "2014-03-03"], ["id_number", 3], ["created_at", "2019-09-10 18:18:42.669486"], ["updated_at", "2019-09-10 18:18:42.669486"]]
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+  [1m[35m (182.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/patients_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/patients/3
+Completed 302 Found in 189ms (ActiveRecord: 182.9ms | Allocations: 3652)
+
+
+Started GET "/patients/3" for 127.0.0.1 at 2019-09-10 13:18:42 -0500
+Processing by PatientsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/patients_controller.rb:67:in `set_patient'
+  Rendering patients/show.html.erb within layouts/application
+  Rendered patients/show.html.erb within layouts/application (Duration: 0.2ms | Allocations: 107)
+Completed 200 OK in 17ms (Views: 15.6ms | ActiveRecord: 0.1ms | Allocations: 9956)
+
+
+Started GET "/patients" for 127.0.0.1 at 2019-09-10 13:18:45 -0500
+Processing by PatientsController#index as HTML
+  Rendering patients/index.html.erb within layouts/application
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients"[0m
+  ↳ app/views/patients/index.html.erb:17
+  Rendered patients/index.html.erb within layouts/application (Duration: 2.2ms | Allocations: 1018)
+Completed 200 OK in 11ms (Views: 10.5ms | ActiveRecord: 0.1ms | Allocations: 10352)
+
+
+Started GET "/office_types/new" for 127.0.0.1 at 2019-09-10 13:18:49 -0500
+Processing by OfficeTypesController#new as HTML
+  Rendering office_types/new.html.erb within layouts/application
+  Rendered office_types/_form.html.erb (Duration: 1.9ms | Allocations: 1245)
+  Rendered office_types/new.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1586)
+Completed 200 OK in 19ms (Views: 12.2ms | ActiveRecord: 0.7ms | Allocations: 14800)
+
+
+Started POST "/office_types" for 127.0.0.1 at 2019-09-10 13:18:55 -0500
+Processing by OfficeTypesController#create as HTML
+  Parameters: {"authenticity_token"=>"fBlSfJfruTyjtN7oW3oYaQ1RCN5jAtuRAWxKuSFTMf2RdfxEwtE/MHBpBk79cP+p4/ZrUG6rNiVaqE9L3XVPyg==", "office_type"=>{"officeType_id"=>"1", "officeType_name"=>"Optometry"}, "commit"=>"Create Office type"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Create (0.3ms)[0m  [1m[32mINSERT INTO "office_types" ("officeType_id", "officeType_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["officeType_id", 1], ["officeType_name", "Optometry"], ["created_at", "2019-09-10 18:18:55.679194"], ["updated_at", "2019-09-10 18:18:55.679194"]]
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[35m (146.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/office_types/1
+Completed 302 Found in 153ms (ActiveRecord: 146.9ms | Allocations: 3544)
+
+
+Started GET "/office_types/1" for 127.0.0.1 at 2019-09-10 13:18:55 -0500
+Processing by OfficeTypesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mOfficeType Load (0.2ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/office_types_controller.rb:67:in `set_office_type'
+  Rendering office_types/show.html.erb within layouts/application
+  Rendered office_types/show.html.erb within layouts/application (Duration: 0.6ms | Allocations: 276)
+Completed 200 OK in 14ms (Views: 11.7ms | ActiveRecord: 0.2ms | Allocations: 10395)
+
+
+Started GET "/office_types" for 127.0.0.1 at 2019-09-10 13:18:56 -0500
+Processing by OfficeTypesController#index as HTML
+  Rendering office_types/index.html.erb within layouts/application
+  [1m[36mOfficeType Load (0.2ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types"[0m
+  ↳ app/views/office_types/index.html.erb:15
+  Rendered office_types/index.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1019)
+Completed 200 OK in 31ms (Views: 29.3ms | ActiveRecord: 0.2ms | Allocations: 10495)
+
+
+Started GET "/office_types/new" for 127.0.0.1 at 2019-09-10 13:18:57 -0500
+Processing by OfficeTypesController#new as HTML
+  Rendering office_types/new.html.erb within layouts/application
+  Rendered office_types/_form.html.erb (Duration: 1.1ms | Allocations: 744)
+  Rendered office_types/new.html.erb within layouts/application (Duration: 1.4ms | Allocations: 829)
+Completed 200 OK in 11ms (Views: 10.5ms | ActiveRecord: 0.0ms | Allocations: 10177)
+
+
+Started POST "/office_types" for 127.0.0.1 at 2019-09-10 13:19:00 -0500
+Processing by OfficeTypesController#create as HTML
+  Parameters: {"authenticity_token"=>"GxNCWwLyxtvEdjnlmWu99WJS7QwDG+4nLqoKWp+bga/2f+xjV8hA1xer4UM/YVo1jPWOgg6yA5N1bg+oY73/mA==", "office_type"=>{"officeType_id"=>"2", "officeType_name"=>"Surgery"}, "commit"=>"Create Office type"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Create (0.2ms)[0m  [1m[32mINSERT INTO "office_types" ("officeType_id", "officeType_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["officeType_id", 2], ["officeType_name", "Surgery"], ["created_at", "2019-09-10 18:19:00.207747"], ["updated_at", "2019-09-10 18:19:00.207747"]]
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[35m (136.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/office_types/2
+Completed 302 Found in 142ms (ActiveRecord: 136.4ms | Allocations: 3482)
+
+
+Started GET "/office_types/2" for 127.0.0.1 at 2019-09-10 13:19:00 -0500
+Processing by OfficeTypesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/office_types_controller.rb:67:in `set_office_type'
+  Rendering office_types/show.html.erb within layouts/application
+  Rendered office_types/show.html.erb within layouts/application (Duration: 0.2ms | Allocations: 94)
+Completed 200 OK in 10ms (Views: 8.4ms | ActiveRecord: 0.1ms | Allocations: 9944)
+
+
+Started GET "/office_types" for 127.0.0.1 at 2019-09-10 13:19:01 -0500
+Processing by OfficeTypesController#index as HTML
+  Rendering office_types/index.html.erb within layouts/application
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types"[0m
+  ↳ app/views/office_types/index.html.erb:15
+  Rendered office_types/index.html.erb within layouts/application (Duration: 1.4ms | Allocations: 853)
+Completed 200 OK in 10ms (Views: 9.5ms | ActiveRecord: 0.1ms | Allocations: 10186)
+
+
+Started GET "/office_types/new" for 127.0.0.1 at 2019-09-10 13:19:01 -0500
+Processing by OfficeTypesController#new as HTML
+  Rendering office_types/new.html.erb within layouts/application
+  Rendered office_types/_form.html.erb (Duration: 1.1ms | Allocations: 741)
+  Rendered office_types/new.html.erb within layouts/application (Duration: 1.4ms | Allocations: 826)
+Completed 200 OK in 9ms (Views: 8.5ms | ActiveRecord: 0.0ms | Allocations: 10172)
+
+
+Started POST "/office_types" for 127.0.0.1 at 2019-09-10 13:19:04 -0500
+Processing by OfficeTypesController#create as HTML
+  Parameters: {"authenticity_token"=>"AUybGYbILgZMe3AZwsmPORQTttPvMd5EoOEH28L8QZLsIDUh0/KoCp+mqL9kw2j5+rTVXeKYM/D7JQIpPto/pQ==", "office_type"=>{"officeType_id"=>"3", "officeType_name"=>"Chiropractic"}, "commit"=>"Create Office type"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Create (0.2ms)[0m  [1m[32mINSERT INTO "office_types" ("officeType_id", "officeType_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["officeType_id", 3], ["officeType_name", "Chiropractic"], ["created_at", "2019-09-10 18:19:04.279181"], ["updated_at", "2019-09-10 18:19:04.279181"]]
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[35m (139.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/office_types/3
+Completed 302 Found in 146ms (ActiveRecord: 139.6ms | Allocations: 3480)
+
+
+Started GET "/office_types/3" for 127.0.0.1 at 2019-09-10 13:19:04 -0500
+Processing by OfficeTypesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mOfficeType Load (0.2ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/office_types_controller.rb:67:in `set_office_type'
+  Rendering office_types/show.html.erb within layouts/application
+  Rendered office_types/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 94)
+Completed 200 OK in 12ms (Views: 8.9ms | ActiveRecord: 0.2ms | Allocations: 9944)
+
+
+Started GET "/office_types" for 127.0.0.1 at 2019-09-10 13:19:05 -0500
+Processing by OfficeTypesController#index as HTML
+  Rendering office_types/index.html.erb within layouts/application
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types"[0m
+  ↳ app/views/office_types/index.html.erb:15
+  Rendered office_types/index.html.erb within layouts/application (Duration: 1.5ms | Allocations: 973)
+Completed 200 OK in 11ms (Views: 10.1ms | ActiveRecord: 0.1ms | Allocations: 10308)
+
+
+Started GET "/office_types/new" for 127.0.0.1 at 2019-09-10 13:19:06 -0500
+Processing by OfficeTypesController#new as HTML
+  Rendering office_types/new.html.erb within layouts/application
+  Rendered office_types/_form.html.erb (Duration: 1.2ms | Allocations: 741)
+  Rendered office_types/new.html.erb within layouts/application (Duration: 1.4ms | Allocations: 826)
+Completed 200 OK in 11ms (Views: 10.1ms | ActiveRecord: 0.0ms | Allocations: 10169)
+
+
+Started POST "/office_types" for 127.0.0.1 at 2019-09-10 13:19:09 -0500
+Processing by OfficeTypesController#create as HTML
+  Parameters: {"authenticity_token"=>"qQW/g1PzUe7J4Uik99FZtJzBul9S/OTCq4x8vQgK3otEaRG7BsnX4ho8kAJR2750cmbZ0V9VCXbwSHlP9CygvA==", "office_type"=>{"officeType_id"=>"4", "officeType_name"=>"Otolaryngology"}, "commit"=>"Create Office type"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Create (0.3ms)[0m  [1m[32mINSERT INTO "office_types" ("officeType_id", "officeType_name", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["officeType_id", 4], ["officeType_name", "Otolaryngology"], ["created_at", "2019-09-10 18:19:09.753070"], ["updated_at", "2019-09-10 18:19:09.753070"]]
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+  [1m[35m (122.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/office_types_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/office_types/4
+Completed 302 Found in 130ms (ActiveRecord: 122.8ms | Allocations: 3479)
+
+
+Started GET "/office_types/4" for 127.0.0.1 at 2019-09-10 13:19:09 -0500
+Processing by OfficeTypesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/office_types_controller.rb:67:in `set_office_type'
+  Rendering office_types/show.html.erb within layouts/application
+  Rendered office_types/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 94)
+Completed 200 OK in 11ms (Views: 10.0ms | ActiveRecord: 0.1ms | Allocations: 9948)
+
+
+Started GET "/office_types" for 127.0.0.1 at 2019-09-10 13:19:11 -0500
+Processing by OfficeTypesController#index as HTML
+  Rendering office_types/index.html.erb within layouts/application
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types"[0m
+  ↳ app/views/office_types/index.html.erb:15
+  Rendered office_types/index.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1094)
+Completed 200 OK in 13ms (Views: 12.1ms | ActiveRecord: 0.1ms | Allocations: 10433)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:19:15 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 2.3ms | Allocations: 1697)
+  Rendered offices/new.html.erb within layouts/application (Duration: 3.3ms | Allocations: 2040)
+Completed 200 OK in 21ms (Views: 12.6ms | ActiveRecord: 0.5ms | Allocations: 16788)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:19:32 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"5L9Pnt4DiwLZWZ/Mntz5ydRN47SCRwpb87gwIttDlJzCht2nwBgcgxj2SZIi4OmDwUgz8PAc5d4wmauXRVmgOA==", "office"=>{"code"=>"1", "name"=>"Chiropractic 1", "location"=>"A Building", "office_type_id"=>"3"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.3ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "1"], ["name", "Chiropractic 1"], ["location", "A Building"], ["office_type_id", 3], ["created_at", "2019-09-10 18:19:32.148883"], ["updated_at", "2019-09-10 18:19:32.148883"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (118.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/1
+Completed 302 Found in 126ms (ActiveRecord: 118.8ms | Allocations: 5464)
+
+
+Started GET "/offices/1" for 127.0.0.1 at 2019-09-10 13:19:32 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.7ms | Allocations: 326)
+Completed 200 OK in 13ms (Views: 9.3ms | ActiveRecord: 0.2ms | Allocations: 10451)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:19:33 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 1.9ms | Allocations: 1061)
+Completed 200 OK in 30ms (Views: 29.1ms | ActiveRecord: 0.2ms | Allocations: 10538)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:19:35 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 1.5ms | Allocations: 1101)
+  Rendered offices/new.html.erb within layouts/application (Duration: 1.8ms | Allocations: 1186)
+Completed 200 OK in 10ms (Views: 9.7ms | ActiveRecord: 0.0ms | Allocations: 10531)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:19:42 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"GXENBu75d2JUW1ktihLLi+U5GMYaStzfhX79LBorYj4/SJ8/8OLg45X0j3M2LtvB8DzIgmgRM1pGX2aZhDFWmg==", "office"=>{"code"=>"2", "name"=>"Chiropractic 2", "location"=>"Central Building", "office_type_id"=>"3"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.2ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.3ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "2"], ["name", "Chiropractic 2"], ["location", "Central Building"], ["office_type_id", 3], ["created_at", "2019-09-10 18:19:42.404502"], ["updated_at", "2019-09-10 18:19:42.404502"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (127.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/2
+Completed 302 Found in 137ms (ActiveRecord: 127.9ms | Allocations: 4651)
+
+
+Started GET "/offices/2" for 127.0.0.1 at 2019-09-10 13:19:42 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 100)
+Completed 200 OK in 10ms (Views: 8.3ms | ActiveRecord: 0.2ms | Allocations: 9954)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:19:43 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 1.6ms | Allocations: 869)
+Completed 200 OK in 10ms (Views: 9.1ms | ActiveRecord: 0.1ms | Allocations: 10205)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:19:44 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 1.5ms | Allocations: 1098)
+  Rendered offices/new.html.erb within layouts/application (Duration: 1.8ms | Allocations: 1183)
+Completed 200 OK in 10ms (Views: 9.5ms | ActiveRecord: 0.0ms | Allocations: 10527)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:19:54 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"HeNZR4rbkdOntMRrzD7DXuO27wuUcSvmzRndconW32U72st+lMAGUmYbEjVwAtMU9rM/T+YqxGMOOEbHF8zrwQ==", "office"=>{"code"=>"3", "name"=>"Optometrist", "location"=>"Central Building", "office_type_id"=>"1"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.3ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "3"], ["name", "Optometrist"], ["location", "Central Building"], ["office_type_id", 1], ["created_at", "2019-09-10 18:19:54.483935"], ["updated_at", "2019-09-10 18:19:54.483935"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (129.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/3
+Completed 302 Found in 140ms (ActiveRecord: 130.2ms | Allocations: 4654)
+
+
+Started GET "/offices/3" for 127.0.0.1 at 2019-09-10 13:19:54 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 100)
+Completed 200 OK in 14ms (Views: 11.7ms | ActiveRecord: 0.1ms | Allocations: 9954)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:19:55 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 2.4ms | Allocations: 997)
+Completed 200 OK in 12ms (Views: 11.2ms | ActiveRecord: 0.1ms | Allocations: 10329)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:19:56 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 1.6ms | Allocations: 1098)
+  Rendered offices/new.html.erb within layouts/application (Duration: 1.9ms | Allocations: 1183)
+Completed 200 OK in 11ms (Views: 10.4ms | ActiveRecord: 0.0ms | Allocations: 10528)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:20:05 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"bnF5pR7RberCxw3i3wOmNSazVMtcMfCeqKTnUgIXmANISOucAMr6awNo27xjP7Z/M7aEjy5qHxtrhXznnA2spw==", "office"=>{"code"=>"4", "name"=>"Otolaryngology", "location"=>"C Building", "office_type_id"=>"4"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.3ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "4"], ["name", "Otolaryngology"], ["location", "C Building"], ["office_type_id", 4], ["created_at", "2019-09-10 18:20:05.257934"], ["updated_at", "2019-09-10 18:20:05.257934"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (140.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/4
+Completed 302 Found in 151ms (ActiveRecord: 141.1ms | Allocations: 4649)
+
+
+Started GET "/offices/4" for 127.0.0.1 at 2019-09-10 13:20:05 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.6ms | Allocations: 100)
+Completed 200 OK in 14ms (Views: 12.4ms | ActiveRecord: 0.1ms | Allocations: 9950)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:20:06 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 1.7ms | Allocations: 1126)
+Completed 200 OK in 12ms (Views: 10.9ms | ActiveRecord: 0.1ms | Allocations: 10457)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:20:07 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 1.6ms | Allocations: 1098)
+  Rendered offices/new.html.erb within layouts/application (Duration: 2.0ms | Allocations: 1183)
+Completed 200 OK in 11ms (Views: 10.2ms | ActiveRecord: 0.0ms | Allocations: 10529)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:20:16 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"oDMzhhweQ3+4WQSiUDwfVGHGisF4TiiQtTyAMjzGNUCGCqG/AgXU/nn20vzsAA8edMNahQoVxxV2HRuHotwB5A==", "office"=>{"code"=>"5", "name"=>"Surgery 1", "location"=>"B Building", "office_type_id"=>"2"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.1ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.4ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "5"], ["name", "Surgery 1"], ["location", "B Building"], ["office_type_id", 2], ["created_at", "2019-09-10 18:20:16.618244"], ["updated_at", "2019-09-10 18:20:16.618244"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (197.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/5
+Completed 302 Found in 208ms (ActiveRecord: 198.0ms | Allocations: 4651)
+
+
+Started GET "/offices/5" for 127.0.0.1 at 2019-09-10 13:20:16 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 100)
+Completed 200 OK in 10ms (Views: 8.0ms | ActiveRecord: 0.2ms | Allocations: 9953)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:20:17 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 2.6ms | Allocations: 1254)
+Completed 200 OK in 29ms (Views: 28.3ms | ActiveRecord: 0.1ms | Allocations: 10595)
+
+
+Started GET "/offices/new" for 127.0.0.1 at 2019-09-10 13:20:21 -0500
+Processing by OfficesController#new as HTML
+  Rendering offices/new.html.erb within layouts/application
+  Rendered offices/_form.html.erb (Duration: 1.8ms | Allocations: 1098)
+  Rendered offices/new.html.erb within layouts/application (Duration: 2.1ms | Allocations: 1183)
+Completed 200 OK in 11ms (Views: 10.9ms | ActiveRecord: 0.0ms | Allocations: 10537)
+
+
+Started POST "/offices" for 127.0.0.1 at 2019-09-10 13:20:28 -0500
+Processing by OfficesController#create as HTML
+  Parameters: {"authenticity_token"=>"K8Z0JjlwvjVscEP8J7KzuZqRM77YADHwDYpjnWlPg20N/+YfJ2sptK3flaKbjqPzj5Tj+qpb3nXOq/go91W3yQ==", "office"=>{"code"=>"6", "name"=>"Surgery 2", "location"=>"B Building", "office_type_id"=>"2"}, "commit"=>"Create Office"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOfficeType Load (0.2ms)[0m  [1m[34mSELECT "office_types".* FROM "office_types" WHERE "office_types"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[36mOffice Create (0.3ms)[0m  [1m[32mINSERT INTO "offices" ("code", "name", "location", "office_type_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["code", "6"], ["name", "Surgery 2"], ["location", "B Building"], ["office_type_id", 2], ["created_at", "2019-09-10 18:20:28.555299"], ["updated_at", "2019-09-10 18:20:28.555299"]]
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+  [1m[35m (143.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/offices_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/offices/6
+Completed 302 Found in 155ms (ActiveRecord: 144.1ms | Allocations: 4661)
+
+
+Started GET "/offices/6" for 127.0.0.1 at 2019-09-10 13:20:28 -0500
+Processing by OfficesController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/offices_controller.rb:67:in `set_office'
+  Rendering offices/show.html.erb within layouts/application
+  Rendered offices/show.html.erb within layouts/application (Duration: 0.3ms | Allocations: 100)
+Completed 200 OK in 12ms (Views: 8.7ms | ActiveRecord: 0.1ms | Allocations: 9952)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-10 13:20:30 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 2.6ms | Allocations: 1382)
+Completed 200 OK in 11ms (Views: 10.1ms | ActiveRecord: 0.1ms | Allocations: 10720)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-10 13:20:33 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 2.9ms | Allocations: 1642)
+Completed 200 OK in 16ms (Views: 12.4ms | ActiveRecord: 0.5ms | Allocations: 12513)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-10 13:20:35 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 7.2ms | Allocations: 8669)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 8.0ms | Allocations: 9010)
+Completed 200 OK in 29ms (Views: 18.5ms | ActiveRecord: 0.3ms | Allocations: 26727)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-10 13:21:18 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"lJJpOzKNa/I/E/N9KAUNxFAObE+OOzOST9z85SOdrOn/ULfas15U68AWIXwGVO59wAIw56l98lq/gDwBlxKfhA==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (0.3ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:00:00"], ["end_Time", "2019-09-11 18:30:00"], ["appointment_Purpose", "Back pain."], ["created_at", "2019-09-10 18:21:18.914915"], ["updated_at", "2019-09-10 18:21:18.914915"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (138.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/1
+Completed 302 Found in 152ms (ActiveRecord: 139.4ms | Allocations: 9514)
+
+
+Started GET "/appointments/1" for 127.0.0.1 at 2019-09-10 13:21:19 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 1.0ms | Allocations: 544)
+Completed 200 OK in 13ms (Views: 10.5ms | ActiveRecord: 0.2ms | Allocations: 10686)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-10 13:21:25 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 1.7ms | Allocations: 811)
+Completed 200 OK in 17ms (Views: 16.2ms | ActiveRecord: 0.1ms | Allocations: 10144)
+
+

@@ -1,0 +1,27 @@
+<%= form_with(model: office_type, local: true) do |form| %>
+  <% if office_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(office_type.errors.count, "error") %> prohibited this office_type from being saved:</h2>
+
+      <ul>
+        <% office_type.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :officeType_id %>
+    <%= form.number_field :officeType_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :officeType_name %>
+    <%= form.text_field :officeType_name %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

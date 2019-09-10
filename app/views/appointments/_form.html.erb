@@ -1,0 +1,72 @@
+<%= form_with(model: appointment, local: true) do |form| %>
+  <% if appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+        <% appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :office_id %>
+    <%= form.text_field :office_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :doctor_id %>
+    <%= form.text_field :doctor_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :doctor_name %>
+    <%= form.text_field :doctor_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :doctor_surname %>
+    <%= form.text_field :doctor_surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patient_id %>
+    <%= form.text_field :patient_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patient_name %>
+    <%= form.text_field :patient_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patient_surname %>
+    <%= form.text_field :patient_surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :appointment_date %>
+    <%= form.date_select :appointment_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_Time %>
+    <%= form.datetime_select :start_Time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_Time %>
+    <%= form.datetime_select :end_Time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :appointment_Purpose %>
+    <%= form.text_field :appointment_Purpose %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
