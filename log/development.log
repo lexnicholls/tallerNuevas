@@ -897,3 +897,1018 @@ Processing by AppointmentsController#index as HTML
 Completed 200 OK in 17ms (Views: 16.2ms | ActiveRecord: 0.1ms | Allocations: 10144)
 
 
+Started GET "/doctors" for 127.0.0.1 at 2019-09-12 19:31:36 -0500
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by DoctorsController#index as HTML
+  Rendering doctors/index.html.erb within layouts/application
+  [1m[36mDoctor Load (0.7ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors"[0m
+  ↳ app/views/doctors/index.html.erb:18
+  Rendered doctors/index.html.erb within layouts/application (Duration: 46.9ms | Allocations: 6912)
+Completed 200 OK in 4707ms (Views: 4643.8ms | ActiveRecord: 1.7ms | Allocations: 1296097)
+
+
+Started GET "/offices" for 127.0.0.1 at 2019-09-12 19:33:56 -0500
+Processing by OfficesController#index as HTML
+  Rendering offices/index.html.erb within layouts/application
+  [1m[36mOffice Load (0.8ms)[0m  [1m[34mSELECT "offices".* FROM "offices"[0m
+  ↳ app/views/offices/index.html.erb:17
+  Rendered offices/index.html.erb within layouts/application (Duration: 42.9ms | Allocations: 6296)
+Completed 200 OK in 91ms (Views: 79.4ms | ActiveRecord: 1.8ms | Allocations: 16936)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:35:09 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (1.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 58.9ms | Allocations: 10194)
+Completed 200 OK in 158ms (Views: 94.9ms | ActiveRecord: 2.8ms | Allocations: 21277)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:39:11 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 45.2ms | Allocations: 12939)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 65.0ms | Allocations: 13292)
+Completed 200 OK in 133ms (Views: 84.4ms | ActiveRecord: 1.4ms | Allocations: 32885)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:39:40 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.5ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 4.8ms | Allocations: 860)
+Completed 200 OK in 50ms (Views: 48.4ms | ActiveRecord: 0.5ms | Allocations: 10410)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:40:37 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"fsgHqT2G7cSVE5mj7oxBDClcR81/MDMQuVZF8neWm8Yp87OQ3kvwa87zLJ4YtaBEuVPeX6WGrSTSnkqQkUylpw==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"00", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (1.9ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (4.1ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_time" IS NULL LIMIT ?[0m  [["office_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (5.2ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:00:00"], ["end_Time", "2019-09-11 18:00:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 00:40:37.846709"], ["updated_at", "2019-09-13 00:40:37.846709"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (3.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/2
+Completed 302 Found in 239ms (ActiveRecord: 19.4ms | Allocations: 28905)
+
+
+Started GET "/appointments/2" for 127.0.0.1 at 2019-09-12 19:40:37 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mAppointment Load (3.9ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 20.9ms | Allocations: 544)
+Completed 200 OK in 71ms (Views: 60.9ms | ActiveRecord: 3.9ms | Allocations: 10870)
+
+
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (21.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:41:33 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 110.3ms | Allocations: 10884)
+Completed 200 OK in 2846ms (Views: 2818.0ms | ActiveRecord: 1.7ms | Allocations: 1270834)
+
+
+Started DELETE "/appointments/2" for 127.0.0.1 at 2019-09-12 19:41:41 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"DivlyHZYbq1wOE/sh9vBcXrUwelWwx1fBTxy+lBXK+AgJDjzswdgf2dmXWdLvGeTTvdkT7idmgnEuH+dlrMEtw==", "id"=>"2"}
+  [1m[36mAppointment Load (4.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (0.4ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (345.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 368ms (ActiveRecord: 349.9ms | Allocations: 4565)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:41:42 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 2.7ms | Allocations: 820)
+Completed 200 OK in 54ms (Views: 52.8ms | ActiveRecord: 0.2ms | Allocations: 10364)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:42:00 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 67.6ms | Allocations: 12916)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 72.9ms | Allocations: 13274)
+Completed 200 OK in 112ms (Views: 110.7ms | ActiveRecord: 0.0ms | Allocations: 22887)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:42:43 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"S73vDkSWsbIdNsiT2HESGKOxk1aRajNFMBlIwiCOfUBlsjI1gcm/YApo2hgUFrT6l5I28H80tBPxnUWl5mpSFw==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_time" IS NULL LIMIT ?[0m  [["office_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (2.5ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:00:00"], ["end_Time", "2019-09-11 18:30:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 00:42:43.362712"], ["updated_at", "2019-09-13 00:42:43.362712"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/3
+Completed 302 Found in 178ms (ActiveRecord: 11.6ms | Allocations: 29309)
+
+
+Started GET "/appointments/3" for 127.0.0.1 at 2019-09-12 19:42:43 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 1.6ms | Allocations: 543)
+Completed 200 OK in 124ms (Views: 118.2ms | ActiveRecord: 0.2ms | Allocations: 10928)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:42:48 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 10.0ms | Allocations: 1014)
+Completed 200 OK in 50ms (Views: 48.7ms | ActiveRecord: 0.3ms | Allocations: 10548)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to Proof2 (20190913004418)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mprimary::SchemaMigration Create (8.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190913004418"]]
+  [1m[35m (14.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:45:10 -0500
+  [1m[35m (7.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (1.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 141.5ms | Allocations: 10884)
+Completed 200 OK in 3648ms (Views: 3595.9ms | ActiveRecord: 3.1ms | Allocations: 1270888)
+
+
+Started DELETE "/appointments/3" for 127.0.0.1 at 2019-09-12 19:45:17 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"vrCmpXFGjecOVI8Jlo5cyiu0m55DL6yJUMGXDUWUfiGQv3uetBmDNRkKnYJa6fooH5c+OK1xK9+RRZpqg3BRdg==", "id"=>"3"}
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (3.4ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 3]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (6.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 41ms (ActiveRecord: 10.3ms | Allocations: 4337)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:45:18 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.5ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 9.3ms | Allocations: 853)
+Completed 200 OK in 70ms (Views: 67.9ms | ActiveRecord: 0.5ms | Allocations: 10570)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:45:20 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 58.7ms | Allocations: 10179)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 60.4ms | Allocations: 10537)
+Completed 200 OK in 134ms (Views: 131.7ms | ActiveRecord: 0.0ms | Allocations: 20236)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:45:58 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"rbP58aLm0b41Rdf1tlF1MrwlUqfO1sT+rKaJMHsi4fH6iE3IQSvMEW6lYshAaJR6LCrLNRRgWsrHboZSnfjfkA==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (3.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.3ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_time" IS NULL LIMIT ?[0m  [["office_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (5.9ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:00:00"], ["end_Time", "2019-09-11 18:30:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 00:45:58.587264"], ["updated_at", "2019-09-13 00:45:58.587264"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (30.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/4
+Completed 302 Found in 358ms (ActiveRecord: 44.0ms | Allocations: 29591)
+
+
+Started GET "/appointments/4" for 127.0.0.1 at 2019-09-12 19:45:58 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 4.5ms | Allocations: 547)
+Completed 200 OK in 71ms (Views: 61.8ms | ActiveRecord: 0.2ms | Allocations: 10738)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:46:05 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 8.6ms | Allocations: 1009)
+Completed 200 OK in 73ms (Views: 71.5ms | ActiveRecord: 0.2ms | Allocations: 10542)
+
+
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to Proof3 (20190913004818)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mprimary::SchemaMigration Create (7.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190913004818"]]
+  [1m[35m (32.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:48:55 -0500
+  [1m[35m (4.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 121.0ms | Allocations: 10884)
+Completed 200 OK in 4319ms (Views: 4281.0ms | ActiveRecord: 1.5ms | Allocations: 1270885)
+
+
+Started DELETE "/appointments/4" for 127.0.0.1 at 2019-09-12 19:49:03 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"fw2Q+HtnGIMCBq7Jxl73/oAR3RcZnL89HTLnfZNyPW1RAk3DvjgWURVYvEIKOVEctDJ4sffCOGvctuoaVZYSOg==", "id"=>"4"}
+  [1m[36mAppointment Load (0.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.5ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (3.8ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 4]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (21.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 92ms (ActiveRecord: 26.0ms | Allocations: 4350)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:49:03 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 13.7ms | Allocations: 820)
+Completed 200 OK in 68ms (Views: 67.3ms | ActiveRecord: 0.1ms | Allocations: 10551)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:49:05 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 49.9ms | Allocations: 10183)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 56.4ms | Allocations: 10541)
+Completed 200 OK in 114ms (Views: 111.2ms | ActiveRecord: 0.0ms | Allocations: 20244)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:49:34 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"amDlLnhj2axuXQptwcLrCH/Od1FfvTHhKZ7S7YcohgE9W1EXm67EAzW9v1A3+wpA78Huw4ULr9VCVt2PYfK4YA==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"c", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.3ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 47.0ms | Allocations: 7611)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 52.3ms | Allocations: 7697)
+Completed 200 OK in 333ms (Views: 111.8ms | ActiveRecord: 11.0ms | Allocations: 44330)
+
+
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:52:55 -0500
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.5ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 130.2ms | Allocations: 10689)
+Completed 200 OK in 3695ms (Views: 3654.8ms | ActiveRecord: 5.8ms | Allocations: 1270689)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:53:01 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 50.9ms | Allocations: 10182)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 57.1ms | Allocations: 10542)
+Completed 200 OK in 115ms (Views: 112.6ms | ActiveRecord: 0.0ms | Allocations: 20233)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:53:31 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"P80kzHX8Y5pDxqZA2XXpTouTSCuJI6lJQeyfBrc6eaxo9pD1ljF+NRgmE30vTAgGG5zRuVOVN30qJJBkUeBHzQ==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.8ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.3ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 27.3ms | Allocations: 7611)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 32.8ms | Allocations: 7697)
+Completed 200 OK in 378ms (Views: 182.3ms | ActiveRecord: 5.3ms | Allocations: 42382)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:53:41 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 10.4ms | Allocations: 849)
+Completed 200 OK in 66ms (Views: 64.5ms | ActiveRecord: 0.3ms | Allocations: 10382)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 19:57:09 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 36.3ms | Allocations: 7441)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 39.5ms | Allocations: 7526)
+Completed 200 OK in 84ms (Views: 82.8ms | ActiveRecord: 0.0ms | Allocations: 17066)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 19:57:59 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"mwOyIdCRzkfjr+GHvGnl9AUHDLIU9wxwYNSCnK4+j1nMOAYYM1zT6LhPVLpKUAS8lQiVIM5BkkQLHI3+SOSxOA==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"01", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"31", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (7.6ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:01:00"], ["end_Time", "2019-09-11 18:31:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 00:57:59.543437"], ["updated_at", "2019-09-13 00:57:59.543437"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (17.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/5
+Completed 302 Found in 89ms (ActiveRecord: 25.8ms | Allocations: 8871)
+
+
+Started GET "/appointments/5" for 127.0.0.1 at 2019-09-12 19:57:59 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mAppointment Load (0.5ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 2.4ms | Allocations: 546)
+Completed 200 OK in 72ms (Views: 58.6ms | ActiveRecord: 0.5ms | Allocations: 11070)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:58:03 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 5.9ms | Allocations: 1006)
+Completed 200 OK in 64ms (Views: 62.4ms | ActiveRecord: 0.2ms | Allocations: 10537)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 19:59:28 -0500
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 0.0ms | Allocations: 1268)
+
+
+  
+SyntaxError (/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected ':', expecting '}'
+...iqueness: {scope: :start_Time :end_Time, message: "is ocuppi...
+...                              ^
+/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+..., try in other hour, please." }
+...                              ^):
+  
+app/models/appointment.rb:6: syntax error, unexpected ':', expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected ':', expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected ':', expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/controllers/appointments_controller.rb:7:in `index'
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 20:00:26 -0500
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 0.0ms | Allocations: 1268)
+
+
+  
+SyntaxError (/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected ',', expecting =>
+...{scope: :start_Time, :end_Time, message: "is ocuppied, try i...
+...                              ^
+/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+..., try in other hour, please." }
+...                              ^):
+  
+app/models/appointment.rb:6: syntax error, unexpected ',', expecting =>
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected ',', expecting =>
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected ',', expecting =>
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/controllers/appointments_controller.rb:7:in `index'
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 20:01:49 -0500
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 0.0ms | Allocations: 1268)
+
+
+  
+SyntaxError (/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected =>, expecting '}'
+...queness: {scope: :start_Time => :end_Time, message: "is ocup...
+...                             ^~
+/home/andres/Documentos/tallerNuevas-wip/app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+..., try in other hour, please." }
+...                              ^):
+  
+app/models/appointment.rb:6: syntax error, unexpected =>, expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected =>, expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/models/appointment.rb:6: syntax error, unexpected =>, expecting '}'
+app/models/appointment.rb:6: syntax error, unexpected '}', expecting end
+app/controllers/appointments_controller.rb:7:in `index'
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:09:37 -0500
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (5.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 129.6ms | Allocations: 10884)
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:09:38 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.7ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 27.3ms | Allocations: 2591)
+Completed 200 OK in 8638ms (Views: 8567.4ms | ActiveRecord: 7.5ms | Allocations: 2237996)
+
+
+Completed 200 OK in 7168ms (Views: 7165.7ms | ActiveRecord: 0.7ms | Allocations: 1884984)
+
+
+Started DELETE "/appointments/5" for 127.0.0.1 at 2019-09-12 21:09:53 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"V93qjsOIy+NOK06oueUy4HncaIa+OlqOMUPzBk7bDHx50je1BtfFMVl1XCN1gpQCTf/NIFBk3djwx/5hiD8jKw==", "id"=>"5"}
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (5.8ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 5]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (46.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 90ms (ActiveRecord: 52.3ms | Allocations: 4341)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:09:53 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 8.1ms | Allocations: 1000)
+Completed 200 OK in 78ms (Views: 76.5ms | ActiveRecord: 0.2ms | Allocations: 10531)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:10:55 -0500
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 90.6ms | Allocations: 10689)
+Completed 200 OK in 4525ms (Views: 4479.3ms | ActiveRecord: 1.9ms | Allocations: 1270748)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 21:11:03 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 153.8ms | Allocations: 10183)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 156.5ms | Allocations: 10544)
+Completed 200 OK in 233ms (Views: 224.7ms | ActiveRecord: 0.0ms | Allocations: 20240)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 21:11:37 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"0c53Eg9nY0aT+2pqqaJDVfImEYKNcu3s+l3IodpapyiG9cMr7Kp+6cgb31dfm6IdYimIEFfEc9iRlcfDPICZSQ==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"01", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"29", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (57.1ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (1.8ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (1.6ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (6.0ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 1], ["end_Time", "2019-09-11 18:29:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (5.5ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 1], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 2], ["patient_name", "Sutanito"], ["patient_surname", "Cardenas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:01:00"], ["end_Time", "2019-09-11 18:29:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 02:11:37.450872"], ["updated_at", "2019-09-13 02:11:37.450872"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (108.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/6
+Completed 302 Found in 459ms (ActiveRecord: 186.0ms | Allocations: 28318)
+
+
+Started GET "/appointments/6" for 127.0.0.1 at 2019-09-12 21:11:37 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mAppointment Load (5.6ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 7.7ms | Allocations: 547)
+Completed 200 OK in 84ms (Views: 72.3ms | ActiveRecord: 5.6ms | Allocations: 10877)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:11:45 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 6.5ms | Allocations: 1006)
+Completed 200 OK in 65ms (Views: 62.5ms | ActiveRecord: 0.2ms | Allocations: 10532)
+
+
+Started GET "/appointments/6/edit" for 127.0.0.1 at 2019-09-12 21:12:50 -0500
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by AppointmentsController#edit as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 52.3ms | Allocations: 7584)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 57.6ms | Allocations: 7838)
+Completed 200 OK in 208ms (Views: 125.5ms | ActiveRecord: 6.0ms | Allocations: 28146)
+
+
+Started PATCH "/appointments/6" for 127.0.0.1 at 2019-09-12 21:12:57 -0500
+Processing by AppointmentsController#update as HTML
+  Parameters: {"authenticity_token"=>"PmTaHya8zGFqGpbW7C01wzKFwYJWeeBy4m+GUcguW0aseyqQWbZU2Kmf1iSLrKPK0mX2u6W0YXgFqNn0TxUSVA==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Update Appointment", "id"=>"6"}
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mOffice Load (4.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mDoctor Load (0.3ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mPatient Load (0.3ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["id", 6], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 1], ["id", 6], ["end_Time", "2019-09-11 18:30:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 38.2ms | Allocations: 7784)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 41.8ms | Allocations: 7899)
+Completed 200 OK in 313ms (Views: 105.7ms | ActiveRecord: 19.9ms | Allocations: 42779)
+
+
+Started PATCH "/appointments/6" for 127.0.0.1 at 2019-09-12 21:13:06 -0500
+Processing by AppointmentsController#update as HTML
+  Parameters: {"authenticity_token"=>"HnrdE90U6mcaJEyP40t3qNX8NxjFlNTR32ZFkD1fKnIwdQAoGEvktQ16XgQvLNFK4d+SvivKU4ce4kj3+7sFJQ==", "appointment"=>{"office_id"=>"1", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"01", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Update Appointment", "id"=>"6"}
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mPatient Load (0.2ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 1], ["id", 6], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 1], ["id", 6], ["end_Time", "2019-09-11 18:30:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 41.4ms | Allocations: 7629)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 44.2ms | Allocations: 7743)
+Completed 200 OK in 168ms (Views: 97.4ms | ActiveRecord: 1.6ms | Allocations: 26006)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:13:14 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 7.8ms | Allocations: 1041)
+Completed 200 OK in 72ms (Views: 70.3ms | ActiveRecord: 0.4ms | Allocations: 10564)
+
+
+Started DELETE "/appointments/6" for 127.0.0.1 at 2019-09-12 21:13:16 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"tg5dIAPhDzn7tJGMYqlUCGjkhbfsS12M5qbC8sqlcQCYAYAbxr4B6+zqgweuzvLqXMcgEQIV2tonIs+VDEFeVw==", "id"=>"6"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (3.0ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 6]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (120.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 149ms (ActiveRecord: 123.8ms | Allocations: 3982)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:13:17 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 12.7ms | Allocations: 811)
+Completed 200 OK in 167ms (Views: 166.3ms | ActiveRecord: 0.2ms | Allocations: 10542)
+
+
+Started GET "/appointments/1/edit" for 127.0.0.1 at 2019-09-12 21:21:04 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by AppointmentsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 31.0ms | Allocations: 7484)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 34.7ms | Allocations: 7598)
+Completed 200 OK in 89ms (Views: 82.2ms | ActiveRecord: 0.4ms | Allocations: 17663)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:21:59 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 6.5ms | Allocations: 843)
+Completed 200 OK in 55ms (Views: 54.0ms | ActiveRecord: 0.3ms | Allocations: 10367)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 21:37:23 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 27.8ms | Allocations: 7443)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 30.1ms | Allocations: 7528)
+Completed 200 OK in 79ms (Views: 77.8ms | ActiveRecord: 0.0ms | Allocations: 17066)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:37:57 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 4.4ms | Allocations: 844)
+Completed 200 OK in 52ms (Views: 50.9ms | ActiveRecord: 0.2ms | Allocations: 10368)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:42:17 -0500
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.4ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 57.6ms | Allocations: 10658)
+Completed 200 OK in 3030ms (Views: 2957.7ms | ActiveRecord: 1.9ms | Allocations: 1270957)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 21:42:26 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 36.8ms | Allocations: 10183)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 38.2ms | Allocations: 10544)
+Completed 200 OK in 75ms (Views: 73.5ms | ActiveRecord: 0.0ms | Allocations: 20250)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 21:43:09 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"JIZxOjg+Ru8IeH1UZGZChigTne73kmYLOPEapkJbYCVzvcUD2/NbQFOYyGmSX6POuBwEfC0k+D9TORXEpIFeRA==", "appointment"=>{"office_id"=>"2", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"3", "patient_name"=>"Pancracio", "patient_surname"=>"Pancreas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"31", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"19", "end_Time(5i)"=>"00", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.5ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (4.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 2], ["start_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 2], ["end_Time", "2019-09-11 19:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["start_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["end_Time", "2019-09-11 19:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["start_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["end_Time", "2019-09-11 19:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Create (4.0ms)[0m  [1m[32mINSERT INTO "appointments" ("office_id", "doctor_id", "doctor_name", "doctor_surname", "patient_id", "patient_name", "patient_surname", "appointment_date", "start_Time", "end_Time", "appointment_Purpose", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["office_id", 2], ["doctor_id", 1], ["doctor_name", "Alexander"], ["doctor_surname", "Nicholls"], ["patient_id", 3], ["patient_name", "Pancracio"], ["patient_surname", "Pancreas"], ["appointment_date", "2019-09-11"], ["start_Time", "2019-09-11 18:31:00"], ["end_Time", "2019-09-11 19:00:00"], ["appointment_Purpose", "Back Pain."], ["created_at", "2019-09-13 02:43:09.675296"], ["updated_at", "2019-09-13 02:43:09.675296"]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (133.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+Redirected to http://localhost:3000/appointments/7
+Completed 302 Found in 348ms (ActiveRecord: 153.1ms | Allocations: 32129)
+
+
+Started GET "/appointments/7" for 127.0.0.1 at 2019-09-12 21:43:09 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mAppointment Load (0.3ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 4.1ms | Allocations: 544)
+Completed 200 OK in 62ms (Views: 55.2ms | ActiveRecord: 0.3ms | Allocations: 10873)
+
+
+Started GET "/appointments/7/edit" for 127.0.0.1 at 2019-09-12 21:43:15 -0500
+Processing by AppointmentsController#edit as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 26.0ms | Allocations: 7514)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 32.6ms | Allocations: 7769)
+Completed 200 OK in 101ms (Views: 96.9ms | ActiveRecord: 0.1ms | Allocations: 17963)
+
+
+Started PATCH "/appointments/7" for 127.0.0.1 at 2019-09-12 21:43:27 -0500
+Processing by AppointmentsController#update as HTML
+  Parameters: {"authenticity_token"=>"y2iKz+CfIR2Xqr/aQ4sHwMJTG4j8Pmho4cmUzkLvcPHWT22zmBtfcBqTsl/em7Gr9Cvq7sIQhEwNLPSGEwjPBA==", "appointment"=>{"office_id"=>"2", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"3", "patient_name"=>"Pancracio", "patient_surname"=>"Pancreas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"50", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Update Appointment", "id"=>"7"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 2], ["id", 7], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 2], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["id", 7], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["id", 7], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  Rendering appointments/edit.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 31.6ms | Allocations: 7648)
+  Rendered appointments/edit.html.erb within layouts/application (Duration: 32.2ms | Allocations: 7762)
+Completed 200 OK in 174ms (Views: 85.6ms | ActiveRecord: 2.9ms | Allocations: 30277)
+
+
+Started PATCH "/appointments/7" for 127.0.0.1 at 2019-09-12 21:43:41 -0500
+Processing by AppointmentsController#update as HTML
+  Parameters: {"authenticity_token"=>"k6snQQM5U1Li0OjWd6EatxuBfunOtpZdLVsXyEoRChC9pPp6xmZdgPWO+l27xrxVL6LbTyDoEQvs3xqvjPUlRw==", "appointment"=>{"office_id"=>"2", "doctor_id"=>"1", "doctor_name"=>"Alexander", "doctor_surname"=>"Nicholls", "patient_id"=>"3", "patient_name"=>"Pancracio", "patient_surname"=>"Pancreas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"01", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"50", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Update Appointment", "id"=>"7"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mDoctor Load (0.2ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 2], ["id", 7], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 2], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["id", 7], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["doctor_id", 1], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."id" != ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["id", 7], ["start_Time", "2019-09-11 18:01:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."id" != ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["patient_id", 3], ["id", 7], ["end_Time", "2019-09-11 18:50:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[36mAppointment Update (6.8ms)[0m  [1m[33mUPDATE "appointments" SET "start_Time" = ?, "end_Time" = ?, "updated_at" = ? WHERE "appointments"."id" = ?[0m  [["start_Time", "2019-09-11 18:01:00"], ["end_Time", "2019-09-11 18:50:00"], ["updated_at", "2019-09-13 02:43:41.738308"], ["id", 7]]
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+  [1m[35m (71.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:44:in `block in update'
+Redirected to http://localhost:3000/appointments/7
+Completed 302 Found in 165ms (ActiveRecord: 80.1ms | Allocations: 14785)
+
+
+Started GET "/appointments/7" for 127.0.0.1 at 2019-09-12 21:43:41 -0500
+Processing by AppointmentsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  Rendering appointments/show.html.erb within layouts/application
+  Rendered appointments/show.html.erb within layouts/application (Duration: 1.8ms | Allocations: 164)
+Completed 200 OK in 48ms (Views: 42.3ms | ActiveRecord: 0.2ms | Allocations: 10395)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:43:45 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.1ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1012)
+Completed 200 OK in 47ms (Views: 44.8ms | ActiveRecord: 0.1ms | Allocations: 10553)
+
+
+Started DELETE "/appointments/7" for 127.0.0.1 at 2019-09-12 21:43:55 -0500
+Processing by AppointmentsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"x9zxbGc/N+Cigv+bD9tL9UXwplSxZsVW+lFlDxL6ZwXp0yxXomA5MrXc7RDDvO0XcdMD8l84QgA71Who1B5IUg==", "id"=>"7"}
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments" WHERE "appointments"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:67:in `set_appointment'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[36mAppointment Destroy (2.5ms)[0m  [1m[31mDELETE FROM "appointments" WHERE "appointments"."id" = ?[0m  [["id", 7]]
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+  [1m[35m (67.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/appointments_controller.rb:57:in `destroy'
+Redirected to http://localhost:3000/appointments
+Completed 302 Found in 96ms (ActiveRecord: 70.6ms | Allocations: 3841)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:43:55 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 7.5ms | Allocations: 997)
+Completed 200 OK in 60ms (Views: 58.5ms | ActiveRecord: 0.2ms | Allocations: 10532)
+
+
+Started GET "/appointments/new" for 127.0.0.1 at 2019-09-12 21:43:59 -0500
+Processing by AppointmentsController#new as HTML
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 30.3ms | Allocations: 7443)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 33.9ms | Allocations: 7528)
+Completed 200 OK in 79ms (Views: 77.7ms | ActiveRecord: 0.0ms | Allocations: 17065)
+
+
+Started GET "/" for 127.0.0.1 at 2019-09-12 21:44:11 -0500
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/andres/.rvm/gems/ruby-2.6.3/gems/railties-6.0.0/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/andres/.rvm/gems/ruby-2.6.3/gems/railties-6.0.0/lib/rails/templates/rails/welcome/index.html.erb (Duration: 30.2ms | Allocations: 196)
+Completed 200 OK in 33ms (Views: 31.2ms | ActiveRecord: 0.0ms | Allocations: 978)
+
+
+Started GET "/appointments" for 127.0.0.1 at 2019-09-12 21:44:20 -0500
+Processing by AppointmentsController#index as HTML
+  Rendering appointments/index.html.erb within layouts/application
+  [1m[36mAppointment Load (0.2ms)[0m  [1m[34mSELECT "appointments".* FROM "appointments"[0m
+  ↳ app/views/appointments/index.html.erb:24
+  Rendered appointments/index.html.erb within layouts/application (Duration: 8.5ms | Allocations: 1209)
+Completed 200 OK in 60ms (Views: 58.2ms | ActiveRecord: 0.2ms | Allocations: 11971)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 21:44:51 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"s/BRckWMIfkU3hmGjqPsbdmNFoEDTDfcNMMMjUVYz9fky+VLpkE8Vk8+rLt4mg0lSYKPE9n6qehfCwPvo4Lxtg==", "appointment"=>{"office_id"=>"2", "doctor_id"=>"2", "doctor_name"=>"Andres", "doctor_surname"=>"Barbosa", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"30", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.2ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 2], ["end_Time", "2019-09-11 18:30:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["doctor_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["doctor_id", 2], ["end_Time", "2019-09-11 18:30:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["patient_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["patient_id", 2], ["end_Time", "2019-09-11 18:30:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 41.2ms | Allocations: 8363)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 44.0ms | Allocations: 8710)
+Completed 200 OK in 226ms (Views: 90.7ms | ActiveRecord: 3.4ms | Allocations: 29950)
+
+
+Started POST "/appointments" for 127.0.0.1 at 2019-09-12 21:44:58 -0500
+Processing by AppointmentsController#create as HTML
+  Parameters: {"authenticity_token"=>"nSdizXKeCMi6H1rPzEyshFTzUKD1aTLhAQEwpbjwMTuzKL/2t8EGGq1BSEQAKwpmYND1Bhs3tbfAhT3CfhQebA==", "appointment"=>{"office_id"=>"2", "doctor_id"=>"2", "doctor_name"=>"Andres", "doctor_surname"=>"Barbosa", "patient_id"=>"2", "patient_name"=>"Sutanito", "patient_surname"=>"Cardenas", "appointment_date(1i)"=>"2019", "appointment_date(2i)"=>"9", "appointment_date(3i)"=>"11", "start_Time(1i)"=>"2019", "start_Time(2i)"=>"9", "start_Time(3i)"=>"11", "start_Time(4i)"=>"18", "start_Time(5i)"=>"00", "end_Time(1i)"=>"2019", "end_Time(2i)"=>"9", "end_Time(3i)"=>"11", "end_Time(4i)"=>"18", "end_Time(5i)"=>"31", "appointment_Purpose"=>"Back Pain."}, "commit"=>"Create Appointment"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mOffice Load (0.3ms)[0m  [1m[34mSELECT "offices".* FROM "offices" WHERE "offices"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mDoctor Load (0.1ms)[0m  [1m[34mSELECT "doctors".* FROM "doctors" WHERE "doctors"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mPatient Load (0.1ms)[0m  [1m[34mSELECT "patients".* FROM "patients" WHERE "patients"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["office_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."office_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["office_id", 2], ["end_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["doctor_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."doctor_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["doctor_id", 2], ["end_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."start_Time" = ? LIMIT ?[0m  [["patient_id", 2], ["start_Time", "2019-09-11 18:00:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[36mAppointment Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "appointments" WHERE "appointments"."patient_id" = ? AND "appointments"."end_Time" = ? LIMIT ?[0m  [["patient_id", 2], ["end_Time", "2019-09-11 18:31:00"], ["LIMIT", 1]]
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/appointments_controller.rb:30:in `block in create'
+  Rendering appointments/new.html.erb within layouts/application
+  Rendered appointments/_form.html.erb (Duration: 28.8ms | Allocations: 7571)
+  Rendered appointments/new.html.erb within layouts/application (Duration: 29.3ms | Allocations: 7656)
+Completed 200 OK in 141ms (Views: 69.5ms | ActiveRecord: 1.8ms | Allocations: 28512)
+
+
